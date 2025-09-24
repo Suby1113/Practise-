@@ -5,4 +5,12 @@
     select myConeJeff;
     duplicate;
     rotate 180 0 0;
-    move 0 3 0;
+    // get everything selected
+    string $sel[] = `ls -sl`;
+    //create our loop
+    for ($each in $sel)
+    {
+        //do something - use $each to identify objects
+        select $each;
+        move 0 3 0;
+    }
