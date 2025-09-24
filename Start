@@ -12,5 +12,7 @@
     {
         //do something - use $each to identify objects
         select $each;
-        move 0 3 0;
+        duplicate;
+        rotate 180 0 0;
+        move -r 0 1 0;
     }
