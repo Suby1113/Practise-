@@ -5,14 +5,16 @@
     select myConeJeff;
     duplicate;
     rotate 180 0 0;
-    // get everything selected
+
+
+// get everything selected
     string $sel[] = `ls -sl`;
-    //create our loop this makes the selected objects duplicate and move one space up on the Y axis it can also rotate 180 if wanted
+    //create our loop
     for ($each in $sel)
     {
         //do something - use $each to identify objects
         select $each;
-        duplicate;
-        //rotate 180 0 0;
+        duplicate -rr;
+        rotate -r 0 18 0;
         move -r 0 1 0;
     }
