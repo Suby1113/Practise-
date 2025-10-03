@@ -20,13 +20,19 @@
     }
 
 
+
+
+
+
+
+
 // Basic UI Example: My UI
 
-// Delete any existing window with this name
-if (`window -exists myUI`) 
-{
-    deleteUI -window myUI;
-}
+//Delete any existing window with this name
+//if (`window -exists myUI`) 
+//{
+//    deleteUI -window myUI;
+//}
 
 // Define a procedure for "rotateCube"
 global proc rotate() 
