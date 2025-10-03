@@ -23,6 +23,52 @@
 
 
 
+int $nu = rand(1, 101);
+int $ns = rand(1, 101);
+
+int $total = $nu + $ns;
+print("Total: " + $total + "\n");
+
+if ($total <= 50)
+{
+    print("Below 50\n");
+}
+
+else if ($total >= 50 && $total <= 75)
+{
+    print("Above 50\n");
+}
+
+else if ($total <= 100 && $total > 75)
+{
+    print("Below 100\n");
+}
+
+else if ($total >= 100 && $total <= 125)
+{
+    print("Above 100\n");
+}
+
+else if ($total <= 150 && $total > 125)
+{
+    print("Below 150\n");
+}
+
+else if ($total >= 150 && $total <= 175)
+{
+    print("Above 150\n");
+}
+
+else if ($total <= 200 && $total > 175)
+{
+    print("Below 200\n");
+}
+
+else if ($total > 200)
+{
+    print("Above 200\n");
+}
+
 
 
 
@@ -34,21 +80,52 @@
 //    deleteUI -window myUI;
 //}
 
+// Define a procedure for "createCube"
+global proc createCube() 
+{
+    // createCube
+    global string $makeCube[]; // Access the global variable
+    $makeCube = `polyCube`;
+}
+
+
+// Basic UI Example: My UI
+
+//Delete any existing window with this name
+//if (`window -exists myUI`) 
+//{
+//    deleteUI -window myUI;
+//}
+
+// Define a procedure for "createCube"
+global proc createCube() 
+{
+    // createCube
+    global string $makeCube[]; // Access the global variable
+    $makeCube = `polyCube`;
+}
+
+
 // Define a procedure for "rotateCube"
 global proc rotate() 
 {
     string $sel[] = `ls -sl`;
     for ($each in $sel)
     {
-        rotate -r 0 18 0;
+        rotate -r 0 20 0;
     }
+}
+
+global proc deleteIt()
+{
+    doDelete;
 }
 
 global proc deleteUI()
 {
     if (`window -exists myUI`) 
     {
-    deleteUI -window myUI;
+        deleteUI -window myUI;
     }
 
 }
@@ -56,6 +133,8 @@ global proc deleteUI()
 // Build the window
 window -title "My UI" -widthHeight 200 100 myUI;
 columnLayout -adjustableColumn true -rowSpacing 10;
+    button -label "Create Cube" -backgroundColor 0.6 1.0 0.2 -command "createCube()";
+    button -label "Delete" -backgroundColor 0.1 0.1 0.1 -command "deleteIt()";
     button -label "Rotate" -backgroundColor 1.0 1.0 0.0 -command "rotate()";
     button -label "Close" -backgroundColor 0.8 0.2 0.2 -command "deleteUI()";
 setParent ..;
