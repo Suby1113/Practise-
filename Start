@@ -20,12 +20,12 @@
     }
 
 
-// Basic UI Example: My Amazing UI
+// Basic UI Example: My UI
 
 // Delete any existing window with this name
-if (`window -exists myAmazingUI`) 
+if (`window -exists myUI`) 
 {
-    deleteUI -window myAmazingUI;
+    deleteUI -window myUI;
 }
 
 // Define a procedure for "rotateCube"
@@ -38,11 +38,21 @@ global proc rotate()
     }
 }
 
+global proc deleteUI()
+{
+    if (`window -exists myUI`) 
+    {
+    deleteUI -window myUI;
+    }
+
+}
+
 // Build the window
-window -title "My Amazing UI" -widthHeight 200 100 myAmazingUI;
+window -title "My UI" -widthHeight 200 100 myUI;
 columnLayout -adjustableColumn true -rowSpacing 10;
-    button -label "Rotate" -command "rotate()";
+    button -label "Rotate" -backgroundColor 1.0 1.0 0.0 -command "rotate()";
+    button -label "Close" -backgroundColor 0.8 0.2 0.2 -command "deleteUI()";
 setParent ..;
 
 // Show the window
-showWindow myAmazingUI;
+showWindow myUI;
