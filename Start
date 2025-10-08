@@ -21,6 +21,33 @@
 
 
 
+// get everything selected
+    string $sel[] = `ls -sl`;
+    
+    //array
+    string $main = $sel[0];
+    string $copy1 = $sel[1];
+    string $copy2 = $sel[2];
+    string $copy3 = $sel[3];
+    
+    //make objects move
+    connectAttr ($main + ".rotateX") ($copy1 + ".rotateX");
+    connectAttr ($main + ".rotateY") ($copy1 + ".rotateY");
+    connectAttr ($main + ".rotateZ") ($copy1 + ".rotateZ");
+    
+    connectAttr ($main + ".rotateX") ($copy2 + ".rotateX");
+    connectAttr ($main + ".rotateY") ($copy2 + ".rotateY");
+    connectAttr ($main + ".rotateZ") ($copy2 + ".rotateZ");
+    
+    connectAttr ($main + ".rotateX") ($copy3 + ".rotateX");
+    connectAttr ($main + ".rotateY") ($copy3 + ".rotateY");
+    connectAttr ($main + ".rotateZ") ($copy3 + ".rotateZ");
+    
+    connectAttr ($main + ".translateX") ($copy1 + ".translateX");
+    connectAttr ($main + ".translateX") ($copy2 + ".translateX");
+    connectAttr ($main + ".translateX") ($copy3 + ".translateX");
+
+
 
 
 int $nu = rand(1, 101);
