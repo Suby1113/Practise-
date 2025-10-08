@@ -168,3 +168,52 @@ setParent ..;
 
 // Show the window
 showWindow myUI;
+
+
+
+
+
+
+
+// Define a procedure for "createCube"
+global proc createCube() 
+{
+    // createCube
+    global string $makeCube[]; // Access the global variable
+    $makeCube = `polyCube`;
+    scale 8 4 4;
+    move 0 2 0;
+    rename body;
+    makeIdentity -apply true -t 1 -r 1 -s 1 -n 0 -pn 1;
+}
+
+// Define a procedure for "createWheel"
+global proc createWheel() 
+{
+    global string $makeWheel[]; // Access the global variable
+    $makeWheel = `polyCylinder`;
+    rotate 90 0 0;
+    move 2.5 0 2;
+    rename FR;
+    duplicate;
+    move -2.5 0 2;
+    rename BR;
+    duplicate;
+    move -2.5 0 -2;
+    rename BL;
+    duplicate;
+    move 2.5 0 -2;
+    rename FL;
+}
+
+//select BL BR FL FR body;
+//parent;
+
+// Build the window
+window -title "My UI" -widthHeight 200 100 myUI;
+columnLayout -adjustableColumn true -rowSpacing 10;
+    button -label "Body" -command "createCube()";
+    button -label "Wheels" -command "createWheel()";
+
+// Show the window
+showWindow myUI;
