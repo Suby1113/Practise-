@@ -174,7 +174,6 @@ showWindow myUI;
 
 
 
-
 // Define a procedure for "createCube"
 global proc createCube() 
 {
@@ -204,10 +203,14 @@ global proc createWheel()
     duplicate;
     move 2.5 0 -2;
     rename FL;
+    select BL BR FL FR body;
+    parent;
+    select FL;
+    group -n "Left";
+    select FR;
+    group -n "Right";
 }
 
-//select BL BR FL FR body;
-//parent;
 
 // Build the window
 window -title "My UI" -widthHeight 200 100 myUI;
