@@ -237,5 +237,65 @@ Right.rotateY = Steer.rotateY;
 Left.rotateY = Steer.rotateY;
 
 
+//Rotate selected objects randomly
+// Get selected objects
+string $selection[] = `ls -sl`;
+
+// For each object, rotate it a random amount
+for ($each in $selection)
+{
+    int $X = `rand 0 360`;
+    int $Y = `rand 0 360`;
+    int $Z = `rand 0 360`;
+    rotate $X $Y $Z $each;
+}
+
+
+//Random object
+//doDelete;
+int $X = `rand 1 4`;
+print $X;
+if ($X == 1)
+{
+        polyCube;
+}
+else if ($X == 2)
+{
+        polyCylinder;
+}
+else if ($X == 3)
+{
+        polySphere;
+}
+
+// Get selected objects
+string $selection[] = `ls -sl`;
+
+// For each object, rotate it a random amount
+for ($each in $selection)
+{
+    int $X = `rand 0 10`;
+    int $Y = `rand 0 10`;
+    int $Z = `rand 0 10`;
+    move $X $Y $Z $each;
+}
+
+
+
+
+
+//random rotate
+// Get selected objects
+string $selection[] = `ls -sl`;
+
+// For each object, rotate it a random amount
+for ($each in $selection)
+{
+    int $X = `rand 0 360`;
+    int $Y = `rand 0 360`;
+    int $Z = `rand 0 360`;
+    rotate $X $Y $Z $each;
+}
+
 
 
