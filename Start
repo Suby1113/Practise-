@@ -84,3 +84,48 @@ columnLayout -adjustableColumn true -rowSpacing 10;
     button -label "Create Group" -command "createGroup()";
     
 showWindow myUI;
+
+
+//RaceTrack
+//Subhaan Sheikh
+//Version1
+
+//MUST DO
+
+//Make the car
+
+//Make a track that generates on a curve
+
+//Make the curves for 5 cars generate on the track
+
+//Make a circle track that the cars can drive on
+
+//Randomise the starting positions of the cars
+
+//Choose car colours between Red, Blue, Yellow, Green, Orange
+
+//Make a code so the cars can drift on the corners
+
+//Generate multiple tracks using one curve
+
+//Start the animation of the cars on the circular track
+
+//Stop the cars
+
+//Customise the speeds of the cars on the track using a custom attribute
+
+//Create and display the UI
+
+
+//SHOULD DO
+
+//Create the starting lights
+
+//Create a finish line
+
+//Play the animation for the starting lights
+
+
+//COULD DO
+
+//Make the vehicles fully customisable, such as changing the types of wheels, the colour of the car and changing small details like being in a garage
