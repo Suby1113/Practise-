@@ -1713,3 +1713,291 @@ global proc persp()
     floatSliderGrp -label "Red Car Speed" -field true -minValue 0.1 -maxValue 5 -value 1 -changeCommand "setAttr redBody.speed #1";
 
     showWindow myUI;
+
+
+
+
+
+//VERSION 9
+
+
+
+
+// Define a procedure for "createCube"
+global proc createCube() 
+{
+    // createCube
+    global string $makeCube[]; // Access the global variable
+    $makeCube = `polyCube`;
+    scale 8 4 4;
+    move 0 2 0;
+    rename body;
+    makeIdentity -apply true -t 1 -r 1 -s 1 -n 0 -pn 1;
+    polyCylinder;
+    move 3 6 0;
+    rotate 0 0 50;
+    scale 1 0.3 1;
+    rename Steer;
+
+    $makeWheel = `polyCylinder`;
+    rotate 90 0 0;
+    move 2.5 0 2;
+    rename FR;
+    duplicate;
+    move -2.5 0 2;
+    rename BR;
+    duplicate;
+    move -2.5 0 -2;
+    rename BL;
+    duplicate;
+    move 2.5 0 -2;
+    rename FL;
+    select Steer BL BR FL FR body;
+    parent;
+    select FL;
+    group -n "Left";
+    select FR;
+    group -n "Right";
+
+    select body;
+    move 1 -1.715 0;
+    scale 0.06 0.06 0.06;
+    rotate 0 180 0;
+    
+    select body;
+    expression -s "FR.rotateZ = frame * body.translateX * 500;";    
+    expression -s "FL.rotateZ = frame * body.translateX * 500;";
+    expression -s "BR.rotateZ = frame * body.translateX * 500;";
+    expression -s "BL.rotateZ = frame * body.translateX * 500;";
+    expression -s "Right.rotateY = Steer.rotateY;";
+    expression -s "Left.rotateY = Steer.rotateY;";
+    //expression -s "Right.rotateY = body.rotateY;";
+    //expression -s "Left.rotateY = body.rotateY;";
+    expression -s "Steer.rotateY = body.rotateY;";
+    //expression -s "
+    playbackOptions -min 1 -max 120;
+}
+
+
+global proc Red()
+{
+    duplicate body;
+    rename redBody;
+    shadingNode -asShader lambert -name "red";
+    sets -renderable true -noSurfaceShader true -empty -name "redSG";
+    connectAttr -f "red.outColor" "redSG.surfaceShader";
+    setAttr "red.color" -type double3 1 0 0;
+    select redBody;
+    hyperShade -assign "red";
+    move 1 -1.715 1;
+    select body;
+}
+
+global proc Blue()
+{
+    duplicate body;
+    rename blueBody;
+    shadingNode -asShader lambert -name "blue";
+    sets -renderable true -noSurfaceShader true -empty -name "blueSG";
+    connectAttr -f "blue.outColor" "blueSG.surfaceShader";
+    setAttr "blue.color" -type double3 0 0.1968 0.9338;
+    select blueBody;
+    hyperShade -assign "blue";
+    move 1 -1.715 -1;
+    select body;
+}
+
+global proc createTrack1() 
+{
+    //Make the track on a circle
+
+    //Making an oval shaped curve
+    curve -d 3 -p -2 0 0 -p -6 0 0 -p -11 0 0 -p -11 0 -11 -p -1 0 -11 -p 11 0 -11 -p 11 0 0 -p 7 0 0 -p -2 0 0 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 6 -k 6;
+    rename ovalTrack;
+    //Get selected objects
+    string $sel[] = `ls -sl`;
+    //select the curve
+    select ovalTrack;
+    //The faces of the track that need to be extruded on the curve
+    select -tgl Track.f[20];
+    select -tgl Track.f[26];
+    select -tgl Track.f[14];
+    select -tgl Track.f[38];
+    select -tgl Track.f[8];
+    select -tgl Track.f[2];
+    select -tgl Track.f[32];
+    //Extrude the faces on the curve and setting the divisions to 50 to make the track smoother
+    PolyExtrude;
+    setAttr polyExtrudeFace1.divisions 50;
+    select ovalTrack;
+    move 0 0.042 0;
+    
+    duplicate ovalTrack;
+    rename driftCurve1;
+    move -r 0 0.1 -0.121;
+    scale 0.984 1 0.975;
+    
+    duplicate ovalTrack;
+    select ovalTrack1;
+    rename driftCurve2;
+    move -r 0 0.25 0.174;
+    scale 1.011 1 1.030;
+    
+    duplicate driftCurve1;
+    select driftCurve3;
+    move 0 0.142 -1.132;
+    scale 0.897 1 0.8;
+    
+    duplicate driftCurve2;
+    select driftCurve4;
+    move 0 0.292 -0.823;
+    scale 0.918 1 0.839;
+    
+    duplicate driftCurve1;
+    select driftCurve5;
+    move 0 0.142 0.865;
+    scale 1.079 1 1.149;
+    
+    duplicate driftCurve2;
+    select driftCurve6;
+    move 0 0.292 0.958;
+    scale 1.1 1 1.173;
+    
+}
+
+global proc customTrack()
+{
+    //Make the track on the curve
+
+    //Get selected objects
+    string $sel[] = `ls -sl`;
+    rename driveCurve;
+    duplicate;
+    rename customCurve;
+    //The faces of the track that need to be extruded on the curve
+    select -tgl Track.f[20] ;
+    select -tgl Track.f[26] ;
+    select -tgl Track.f[14] ;
+    select -tgl Track.f[38] ;
+    select -tgl Track.f[8] ;
+    select -tgl Track.f[2] ;
+    select -tgl Track.f[32] ;
+    //Extrude the faces on the curve and setting the divisions to 50 to make the track smoother
+    PolyExtrude;
+    setAttr polyExtrudeFace1.divisions 50;
+    
+    select -r driveCurve;
+    move -r 0 0.25 0;
+    
+    //select body driveCurve;
+   // pathAnimation -fractionMode true -follow true -followAxis x -upAxis y -worldUpType "vector" -worldUpVector 0 1 0 -inverseUp false -inverseFront false -bank false -startTimeU `playbackOptions -query -minTime` -endTimeU  `playbackOptions -query -maxTime`;
+
+
+}
+
+global proc motionPath()
+{
+    select body driveCurve;
+    pathAnimation -fractionMode true -follow true -followAxis x -upAxis y -worldUpType "vector" -worldUpVector 0 1 0 -inverseUp false -inverseFront false -bank false -startTimeU `playbackOptions -query -minTime` -endTimeU  `playbackOptions -query -maxTime`;
+
+}
+
+global proc motionPathCars()
+{
+    select blueBody driftCurve4;
+    pathAnimation -fractionMode true -follow true -followAxis x -upAxis y -worldUpType "vector" -worldUpVector 0 1 0 -inverseUp false -inverseFront false -bank false -startTimeU `playbackOptions -query -minTime` -endTimeU  `playbackOptions -query -maxTime`;
+    
+    select body driftCurve2;
+    pathAnimation -fractionMode true -follow true -followAxis x -upAxis y -worldUpType "vector" -worldUpVector 0 1 0 -inverseUp false -inverseFront false -bank false -startTimeU `playbackOptions -query -minTime` -endTimeU  `playbackOptions -query -maxTime`;
+    
+    select redBody driftCurve6;
+    pathAnimation -fractionMode true -follow true -followAxis x -upAxis y -worldUpType "vector" -worldUpVector 0 1 0 -inverseUp false -inverseFront false -bank false -startTimeU `playbackOptions -query -minTime` -endTimeU  `playbackOptions -query -maxTime`;
+    
+    addAttr -ln "speed"  -at double  -dv 1 |body;
+    setAttr -e-keyable true |body.speed;
+    
+    addAttr -ln "speed"  -at double  -dv 1 |redBody;
+    setAttr -e-keyable true |redBody.speed;
+
+    addAttr -ln "speed"  -at double  -dv 1 |blueBody;
+    setAttr -e-keyable true |blueBody.speed;
+
+    string $cars[] = {"blueBody","body","redBody"};
+    for ($c in $cars)
+    {
+        string $mps[] = `listConnections -type "motionPath" $c`;
+        string $mp = $mps[0];
+
+        string $drivers[] = `listConnections ($mp + ".uValue")`;
+        for ($d in $drivers) { delete $d; }
+
+        expression -s ($mp + ".uValue = frame * " + $c + ".speed * 0.01;") -o $c -ae 1 -uc all;
+        
+    }
+
+
+
+    
+    //play;
+}
+
+global proc createCamera()
+{
+    camera -centerOfInterest 5 -focalLength 35 -lensSqueezeRatio 1 -cameraScale 1 -horizontalFilmAperture 1.41732 -horizontalFilmOffset 0 -verticalFilmAperture 0.94488 -verticalFilmOffset 0 -filmFit Fill -overscan 1 -motionBlur 0 -shutterAngle 144 -nearClipPlane 0.1 -farClipPlane 10000 -orthographic 0 -orthographicWidth 30 -panZoomEnabled 0 -horizontalPan 0 -verticalPan 0 -zoom 1; objectMoveCommand; cameraMakeNode 1 "";
+    move -2.1 2.7 5.3;
+    rotate -30 0 0;
+    select camera1 redBody;
+    parent;
+    
+    camera -centerOfInterest 5 -focalLength 35 -lensSqueezeRatio 1 -cameraScale 1 -horizontalFilmAperture 1.41732 -horizontalFilmOffset 0 -verticalFilmAperture 0.94488 -verticalFilmOffset 0 -filmFit Fill -overscan 1 -motionBlur 0 -shutterAngle 144 -nearClipPlane 0.1 -farClipPlane 10000 -orthographic 0 -orthographicWidth 30 -panZoomEnabled 0 -horizontalPan 0 -verticalPan 0 -zoom 1; objectMoveCommand; cameraMakeNode 1 "";
+    rename camera2;
+    move -1.39 0.69 0.11;
+    rotate -15 90 0;
+    select camera2 body;
+    parent;
+}
+
+global proc cameraCar()
+{
+    lookThroughModelPanelClipped "camera1" modelPanel4 0.001 1000;
+}
+
+
+global proc defaultFOV()
+{
+    lookThroughModelPanelClipped "camera2" modelPanel4 0.001 1000;
+}
+
+global proc persp()
+{
+  lookThroughModelPanelClipped "persp" modelPanel4 0.001 1000;  
+}
+
+
+// Build the window
+
+    if (`window -exists myUI`)
+        deleteUI myUI;
+
+    window -title "Track Racer UI" -widthHeight 200 100 myUI;
+    columnLayout -adjustableColumn true -rowSpacing 10;
+
+    button -label "Create Oval Track" -command "createTrack1()";
+    button -label "Create Custom Track" -command "customTrack()";
+    button -label "Create Car" -command "createCube()";
+    button -label "Make Car Red" -command "Red()";
+    button -label "Make Car Blue" -command "Blue()";
+    button -label "Attach default car to custom curve" -command "motionPath()";
+    button -label "Attach all cars to oval curve" -command "motionPathCars()";
+    button -label "Create Cameras" -command "createCamera()";
+    button -label "View from different angle" -command "cameraCar()";
+    button -label "View from first person angle" -command "defaultFOV()";
+    button -label "View from perspective camera" -command "persp()";
+    
+    text -label "Car Speed Controls";
+
+    floatSliderGrp -label "Blue Car Speed" -field true -minValue 0.1 -maxValue 5 -value 1 -changeCommand "setAttr blueBody.speed #1";
+    floatSliderGrp -label "Default Car Speed" -field true -minValue 0.1 -maxValue 5 -value 1 -changeCommand "setAttr body.speed #1";
+    floatSliderGrp -label "Red Car Speed" -field true -minValue 0.1 -maxValue 5 -value 1 -changeCommand "setAttr redBody.speed #1";
+
+    showWindow myUI;
